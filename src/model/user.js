@@ -30,7 +30,7 @@ class User {
 
   updateProfile() {
     return new Promise((resolve, reject) => {
-      mongo.getIAMDb().collection('users').findOneAndUpdate({
+      mongo.getIAMCollection('users').findOneAndUpdate({
         userName: this.getUserName()
       }, {
         $set: {
@@ -51,7 +51,7 @@ class User {
 
   static getUser(userName) {
     return new Promise((resolve, reject) => {
-      mongo.getIAMDb().collection('users').find({
+      mongo.getIAMCollection('users').find({
         userName: userName
       }).next((err, doc) => {
         if (err || doc == null) {
@@ -65,12 +65,12 @@ class User {
 
   static signUpUser(user) {
     return new Promise((resolve, reject) => {
-      mongo.getIAMDb().collection('users').find({
+      mongo.getIAMCollection('users').find({
         userName: user.getUserName()
       }).next((err, doc) => {
         if (!err && doc == null) {
           const salt = bcrypt.genSaltSync();
-          mongo.getIAMDb().collection('users').insertOne({
+          mongo.getIAMCollection('users').insertOne({
             userName: user.getUserName(),
             password: bcrypt.hashSync(user.getPassword(), salt),
             displayName: user.getDisplayName()
@@ -91,7 +91,7 @@ class User {
   closeAccount(password) {
     return new Promise((resolve, reject) => {
       if(bcrypt.compareSync(password, this.getPassword())){
-        mongo.getIAMDb().collection('users').deleteOne({
+        mongo.getIAMCollection('users').deleteOne({
           userName: this.getUserName()
         }, (err, doc) => {
           // console.log(err,doc)

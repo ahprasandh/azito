@@ -4,7 +4,6 @@ function setConstant(name, value) {
       enumerable: true
   });
 }
-
 const appHome=require('path').dirname(require.main.filename);
 setConstant("appHome",appHome);
 
@@ -16,7 +15,7 @@ const sessionConfig={
 setConstant("sessionConfig",sessionConfig);
 
 const mongoDbConfig={
-  url:'mongodb://localhost:27017',
-  db:"azito"
+  url:'mongodb://'+(process.env.NODE_ENV==="production"? process.env.DB_USERNAME+':'+process.env.DB_PASSWORD+'@':'')+process.env.DB_URL,
+  db:process.env.DB_NAME
 };
 setConstant("mongoDbConfig",mongoDbConfig);

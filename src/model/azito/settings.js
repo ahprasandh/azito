@@ -16,7 +16,7 @@ class Settings {
 
   static getSettings(userName) {
     return new Promise((resolve, reject) => {
-      mongo.getUserDb(userName).collection('settings').find().next((err, doc) => {
+      mongo.getUserCollection('settings',userName).find().next((err, doc) => {
         if (err || doc == null) {
           reject(new AzitoError("AZITO_SETTINGS_4041"))
         } else {
@@ -33,7 +33,7 @@ class Settings {
         theme: '0',
         currency: "$"
       }
-      mongo.getUserDb(userName).collection('settings').insertOne(settings, (err, doc) => {
+      mongo.getUserCollection('settings',userName).insertOne(settings, (err, doc) => {
         if (err || doc == null) {
           reject(new AzitoError("AZITO_SERVER_500"))
         } else {
@@ -45,7 +45,7 @@ class Settings {
 
   static saveSettings(userName, settings) {
     return new Promise((resolve, reject) => {
-      mongo.getUserDb(userName).collection('settings').updateOne({}, {
+      mongo.getUserCollection('settings',userName).updateOne({}, {
         $set: settings
       }, {
         returnOriginal: false,

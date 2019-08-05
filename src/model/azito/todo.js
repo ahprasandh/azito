@@ -36,7 +36,7 @@ class Todo {
   static getTodos(userName, version) {
     return new Promise((resolve, reject) => {
       var todos = [];
-      mongo.getUserDb(userName).collection('todos').find().limit(100).forEach(doc => {
+      mongo.getUserCollection('todos').find().limit(100).forEach(doc => {
         if (doc) {
           var todoObject = new Todo(doc._id, doc.title, doc.createdTime, doc.todoTime, doc.snoozeCount);
           todos.push(todoObject.getAsJSON(version));
@@ -53,7 +53,7 @@ class Todo {
   static addTodo(userName, todo, version) {
     return new Promise((resolve, reject) => {
       var todoObject = new Todo(null, todo.title, new Date().getTime(), todo.todoTime, 0);
-      mongo.getUserDb(userName).collection('todos').insertOne(todoObject.getDBJSON("v1"), (err, doc) => {
+      mongo.getUserCollection('todos').insertOne(todoObject.getDBJSON("v1"), (err, doc) => {
         if (err || doc == null) {
           reject(new AzitoError("AZITO_SERVER_500"))
         } else {

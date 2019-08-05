@@ -5,9 +5,10 @@
   "main": "app.js",
   "scripts": {
     "babel": "babel src --plugins transform-es2015-modules-commonjs -d dist",
-    "start": "nodemon --exec babel-node src/app.js",
+    "start": "node dist/app.js",
+    "startdev": "nodemon --exec babel-node -r src/conf/env src/app.js",
     "debug": "babel-node src/app.js --inspect-brk=5005",
-    "build": "babel src -d dist",
+    "build": "babel src --plugins transform-es2015-modules-commonjs -d dist",
     "serve": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +31,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "dotenv": "^8.0.0",
     "jshint": "^2.10.2",
     "nodemon": "^1.18.10"
   }

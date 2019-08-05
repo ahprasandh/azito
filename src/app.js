@@ -54,12 +54,18 @@ let startApp = (err, db) => {
 
   app.use(express.static(appHome + '/client'));
   
-  var options = {
-    key: fs.readFileSync('./src/conf/client-key.pem'),
-    cert: fs.readFileSync('./src/conf/client-cert.pem')
-  };
-  http.createServer(app).listen(8080, () => console.log(`IAM started on http port 8080`));
-  https.createServer(options, app).listen(8443, () => console.log(`IAM started on https port 8443`));
+  if(process.env.NODE_ENV === 'production'){
+    http.createServer(app).listen(process.env.PORT || 8080, () => console.log(`IAM started on http port`));
+  }else{
+    var options = {
+      key: fs.readFileSync('./src/conf/client-key.pem'),
+      cert: fs.readFileSync('./src/conf/client-cert.pem')
+    };
+    http.createServer(app).listen(process.env.PORT || 8080, () => console.log(`IAM started on http port`));
+    https.createServer(options, app).listen(8443, () => console.log(`IAM started on https port 8443`));
+  }
+  
+  
 
   process.on('unhandledRejection', function (reason, p) {
     console.log('Unhandled Reject' + reason + p)

@@ -24,11 +24,16 @@ function getIAMDb() {
   assert.ok(_azitodb, "Db has not been initialized. Please called init first.");
   return _azitodb;
 }
-function getUserDb(user){
-  return mongoClient.db('db'+user+'db');
+function getIAMCollection(collection){
+  assert.ok(_azitodb, "Db has not been initialized. Please called init first.");
+  return _azitodb.collection(collection);
+}
+function getUserCollection(collection,user){
+  return _azitodb.collection(collection+"_"+user);
 }
 module.exports = {
   getIAMDb,
-  getUserDb,
+  getIAMCollection,
+  getUserCollection,
   initDb
 };
