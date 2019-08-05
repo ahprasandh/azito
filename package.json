@@ -8,7 +8,9 @@
     "start": "node dist/app.js",
     "startdev": "nodemon --exec babel-node -r src/conf/env src/app.js",
     "debug": "babel-node src/app.js --inspect-brk=5005",
-    "build": "babel src --plugins transform-es2015-modules-commonjs -d dist",
+    "copy:client":"cp -r src/client/* dist/client/",
+    "copy":"npm run copy:client",
+    "build": "babel src --plugins transform-es2015-modules-commonjs -d dist && npm run copy",
     "serve": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
