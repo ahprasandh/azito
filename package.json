@@ -12,7 +12,8 @@
     "copy":"npm run copy:client",
     "build": "babel src --plugins transform-es2015-modules-commonjs -d dist && npm run copy",
     "serve": "node dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "push":"git push https://github.com/ahprasandh/azito master:master"
   },
   "author": "ahprasandh",
   "license": "MIT",
